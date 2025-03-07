@@ -1,0 +1,35 @@
+{
+  "name": "cl-application",
+  "version": "1.0.0",
+  "description": "Combined CL Application with Frontend and Backend",
+  "main": "index.js",
+  "scripts": {
+    "install:all": "npm run install:backend && npm run install:frontend",
+    "install:backend": "cd backend && npm install",
+    "install:frontend": "cd frontend && npm install",
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:backend": "cd backend && npm run start:dev",
+    "start:frontend": "cd frontend && npm run dev",
+    "build": "npm run build:backend && npm run build:frontend",
+    "build:backend": "cd backend && npm run build",
+    "build:frontend": "cd frontend && npm run build",
+    "test": "npm run test:backend && npm run test:frontend",
+    "test:backend": "cd backend && npm test",
+    "test:frontend": "cd frontend && npm test",
+    "e2e": "cd frontend && npm run cypress:run",
+    "e2e:open": "cd frontend && npm run cypress:open",
+    "verify:all": "./verify-all-tests.sh"
+  },
+  "keywords": [
+    "CL",
+    "fullstack",
+    "nodejs",
+    "react",
+    "typescript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+} 

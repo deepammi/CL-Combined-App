@@ -1,0 +1,92 @@
+name: End-to-End Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: cl_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'npm'
+
+      - name: Install backend dependencies
+        run: |
+          cd cl-backendv4
+          npm ci
+
+      - name: Install frontend dependencies
+        run: |
+          cd cl-frontendv4
+          npm ci
+
+      - name: Set up environment variables
+        run: |
+          echo "DATABASE_URL=postgresql://postgres:postgres@localhost:5432/cl_test" > cl-backendv4/.env.test
+          echo "JWT_SECRET=test-secret" >> cl-backendv4/.env.test
+          echo "AWS_REGION=us-east-1" >> cl-backendv4/.env.test
+          echo "AWS_ACCESS_KEY_ID=test-access-key" >> cl-backendv4/.env.test
+          echo "AWS_SECRET_ACCESS_KEY=test-secret-key" >> cl-backendv4/.env.test
+          echo "NEXT_PUBLIC_API_URL=http://localhost:4000/api/v1" > cl-frontendv4/.env.local
+
+      - name: Run database migrations
+        run: |
+          cd cl-backendv4
+          npx prisma migrate dev
+
+      - name: Start backend server
+        run: |
+          cd cl-backendv4
+          npm run start:dev &
+          sleep 10
+
+      - name: Start frontend server
+        run: |
+          cd cl-frontendv4
+          npm run dev &
+          sleep 10
+
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v5
+        with:
+          working-directory: cl-frontendv4
+          browser: chrome
+          headed: false
+
+      - name: Upload screenshots on failure
+        uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cl-frontendv4/cypress/screenshots
+
+      - name: Upload videos
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: cypress-videos
+          path: cl-frontendv4/cypress/videos 

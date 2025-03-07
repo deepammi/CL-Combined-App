@@ -1,0 +1,27 @@
+// This is a placeholder for a binary Excel file
+// In a real implementation, you would need to create an actual Excel file
+// with the following structure:
+//
+// Sheet 1: Buyer_list
+// - Columns: id, name, company, phone, email, position
+// - Sample data: 
+//   1, Test Buyer 1, Test Company 1, +1234567890, buyer1@example.com, CEO
+//   2, Test Buyer 2, Test Company 2, +0987654321, buyer2@example.com, CTO
+//
+// Sheet 2: Buyside_queries
+// - Columns: id, query
+// - Sample data:
+//   1, What is the company's main product?
+//   2, Who are their main competitors?
+//
+// Sheet 3: Camp_users
+// - Columns: id, name, email, role
+// - Sample data:
+//   1, User One, userone@example.com, Admin
+//
+// Sheet 4: Topics
+// - Columns: id, topic
+// - Sample data:
+//   1, Product features
+//   2, Pricing
+//   3, Competition 
