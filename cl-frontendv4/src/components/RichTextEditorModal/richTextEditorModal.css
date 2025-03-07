@@ -1,0 +1,22 @@
+.text-editor {
+  font-size: 16px;
+  line-height: 1;
+  padding: 1rem 1rem;
+  overflow: auto;
+  height: 100%;
+  max-height: 100%;
+}
+
+.text-editor.editor-control-menu{
+  max-height: calc(100% - 70px);
+}
+
+.text-editor p {
+  margin: .5em 0;
+}
+
+.text-editor-container{
+  height: 100%
+}
+
+

@@ -1,0 +1,59 @@
+name: End-to-End Tests
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - name: Checkout Backend Repository
+        uses: actions/checkout@v3
+        with:
+          repository: your-org/cl-backendv4
+          path: cl-backendv4
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          
+      - name: Install Frontend Dependencies
+        run: npm ci
+        
+      - name: Install Backend Dependencies
+        run: cd cl-backendv4 && npm ci
+        
+      - name: Start Backend Server
+        run: cd cl-backendv4 && npm run start:dev &
+        
+      - name: Wait for Backend Server
+        run: sleep 10
+        
+      - name: Cypress Run
+        uses: cypress-io/github-action@v5
+        with:
+          build: npm run build
+          start: npm run dev
+          wait-on: 'http://localhost:3000'
+          wait-on-timeout: 120
+          
+      - name: Upload Screenshots
+        uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+          
+      - name: Upload Videos
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: cypress-videos
+          path: cypress/videos 

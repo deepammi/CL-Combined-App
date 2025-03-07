@@ -1,0 +1,8 @@
+{
+    "GetConnectManager": {
+      "body": "{\"ContactId\":\"mock-contact-id\"}"
+    },
+    "HangUp": {
+      "message": "Call disconnected successfully"
+    }
+  }

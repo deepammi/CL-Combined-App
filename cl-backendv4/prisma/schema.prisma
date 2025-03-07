@@ -1,0 +1,281 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "postgresql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Buyer_list {
+  id               Int           @id @default(autoincrement())
+  s_no             Int?
+  campaign_name    String
+  buyer_identifier String        @unique
+  linkedin         String?
+  f_name           String?
+  l_name           String?
+  company          String?
+  website          String
+  title            String?
+  location         String?
+  email            String?
+  phone            String?
+  industry         String?
+  function         String?
+  Campaigns        Campaigns     @relation(fields: [campaign_name], references: [name])
+  Call_logs        Call_logs[]
+  Call_scripts     Call_scripts[]
+  emailScripts     EmailScript[]
+}
+
+model Call_logs {
+  id             Int        @id @default(autoincrement())
+  buyer_id       String
+  call_date      DateTime   @default(now())
+  record_fetched Boolean    @default(false)
+  transcript     String?
+  call_recording String?
+  call_id        String?    @db.VarChar(255)
+  Buyer_list     Buyer_list @relation(fields: [buyer_id], references: [buyer_identifier])
+
+  @@index([buyer_id])
+}
+
+model Call_scripts {
+  id          Int         @id @default(autoincrement())
+  buyer_id    String      
+  product_id  Int
+  topic_id    String
+  description String
+  Buyer_list  Buyer_list  @relation(fields: [buyer_id], references: [buyer_identifier])
+  Topics      Topics      @relation(fields: [topic_id], references: [topic_identifier])
+  Feedbacks   Feedbacks[]
+
+  @@unique([buyer_id, topic_id], name: "topic_buyer_id")
+
+}
+
+model Camp_users {
+  id            Int       @id @default(autoincrement())
+  user_email    String
+  campaign_name String
+  user_queueID  String?
+  created_at    DateTime  @default(now())
+  Campaigns     Campaigns @relation(fields: [campaign_name], references: [name])
+  Users         Users     @relation(fields: [user_email], references: [email])
+}
+
+model Campaigns {
+  id               Int          @id @default(autoincrement())
+  name             String       @unique
+  company_name     String
+  company_site     String
+  product_id       Int?
+  product_name     String?
+  product_category String
+  vertical_1       String?
+  vertical_2       String?
+  vertical_3       String?
+  active           Boolean
+  created_at       DateTime     @default(now())
+  Buyer_list       Buyer_list[]
+  Camp_users       Camp_users[]
+  Faqs             Faqs[]
+}
+
+model Faqs {
+  id            Int       @id @default(autoincrement())
+  campaign_name String
+  faq_no        Int
+  faq_question  String?
+  faq_answer    String?
+  Campaigns     Campaigns @relation(fields: [campaign_name], references: [name])
+
+  @@index([campaign_name])
+}
+
+model Feedbacks {
+  id             Int          @id @default(autoincrement())
+  comment        String?
+  section_title  String?
+  flag           Boolean?
+  user_email     String
+  topic_id       Int
+  call_script_id Int
+  created_at     DateTime     @default(now())
+  Call_scripts   Call_scripts @relation(fields: [call_script_id], references: [id])
+  Topics         Topics       @relation(fields: [topic_id], references: [id])
+  Users          Users        @relation(fields: [user_email], references: [email])
+
+  @@unique([call_script_id, topic_id, user_email])
+}
+
+model Sell_side_scripts {
+  id         Int     @id @unique(map: "sell_side_scripts_key") @default(autoincrement())
+  category   String?
+  topic_id   String?
+  product_id Int
+  industry_1 String?
+  industry_2 String?
+  industry_3 String?
+  industry_4 String?
+  industry_5 String?
+  function_1 String?
+  function_2 String?
+  function_3 String?
+  function_4 String?
+  function_5 String?
+  Topics     Topics? @relation(fields: [topic_id], references: [topic_identifier], onDelete: Restrict)
+}
+
+model Topics {
+  id                Int                 @id @default(autoincrement())
+  title             String
+  category          String
+  detail            String
+  topic_identifier  String              @unique
+  Call_scripts      Call_scripts[]
+  Feedbacks         Feedbacks[]
+  Sell_side_scripts Sell_side_scripts[]
+}
+
+model Users {
+  id            Int          @id @default(autoincrement())
+  email         String       @unique
+  password      String
+  password_hint String?
+  created_at    DateTime     @default(now())
+  Camp_users    Camp_users[]
+  Feedbacks     Feedbacks[]
+  roleId        Int
+  role          Role     @relation(fields: [roleId], references: [id])
+}
+
+// changes col1: sNo to s_no,buyerIdentifier to buyer_identifier, fName to f_name, lName to l_name, campaignName to campaign_name
+
+model BuyerList_temp {
+  id               Int       @id @default(autoincrement())
+  s_no              Int
+  buyer_identifier  String    @unique
+  f_name            String
+  l_name            String
+  company          String
+  title            String
+  website          String?
+  linkedin         String?
+  location         String?
+  email            String
+  phone            String?
+  industry         String
+  function         String
+  caseStudyId      String
+  campaign_name    String
+  callScripts      CallScript_temp[]
+  emailScripts     EmailScript_temp[]
+}
+
+model CallScript_temp {
+  id          Int       @id @default(autoincrement())
+  buyer       BuyerList_temp @relation(fields: [buyerId], references: [buyer_identifier])
+  buyerId     String
+  productId   Int
+  topicId     String
+  description String
+}
+
+model EmailScript_temp {
+  id          Int       @id @default(autoincrement())
+  buyer       BuyerList_temp @relation(fields: [buyerId], references: [buyer_identifier])
+  buyerId     String
+  email1      String
+  email2      String?
+  email3      String?
+  linkedIn1   String?
+  linkedIn2   String?
+}
+
+model EmailScript {
+  id                 Int         @id @default(autoincrement())
+  buyer              Buyer_list  @relation(fields: [buyer_identifier], references: [buyer_identifier])
+  buyer_identifier   String         @unique
+  email1             String
+  email2             String?
+  email3             String?
+  linkedIn1          String?
+  linkedIn2          String?
+}
+
+
+model SellSideScript_temp {
+  id          Int       @id @default(autoincrement())
+  category    String
+  topicId     String
+  productId   Int
+  industry1   String?
+  industry2   String?
+  industry3   String?
+  industry4   String?
+  industry5   String?
+  function1   String?
+  function2   String?
+  function3   String?
+  function4   String?
+  function5   String?
+}
+
+// delete id field from this
+model Users_temp {
+  id            Int              @id @default(autoincrement())
+  email         String           @unique
+  password      String
+  password_hint String?
+  created_at    DateTime         @default(now())
+  campaigns     Camp_users_temp[] @relation("UserCampaigns")
+  roleId        Int
+  role          Role         @relation(fields: [roleId], references: [id])
+}
+
+model Role {
+  id          Int       @id @default(autoincrement())
+  name        String       @unique
+  users       Users[]
+  users_temp  Users_temp[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// delete id field from this
+model Camp_users_temp {
+  id            Int        @id @default(autoincrement())
+  user_email    String
+  campaign_name String
+  user_queueID  String
+  created_at    DateTime   @default(now())
+  user          Users_temp @relation("UserCampaigns", fields: [user_email], references: [email], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model Topics_temp {
+  id              Int      @id @default(autoincrement())
+  title           String
+  category        String
+  detail          String
+  topic_identifier String
+}
+
+model Campaigns_temp {
+  id               Int      @id @default(autoincrement())
+  name             String   @unique
+  company_name     String
+  company_site     String
+  product_id       Int
+  product_name     String
+  product_category String
+  vertical_1       String?
+  vertical_2       String?
+  vertical_3       String?
+  active           Boolean
+  created_at       DateTime @default(now())
+}

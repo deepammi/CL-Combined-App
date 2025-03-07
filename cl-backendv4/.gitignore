@@ -1,0 +1,7 @@
+node_modules
+BackendJsonDump.rtf
+# Keep environment variables out of version control
+.env*
+bkp_campaignSetup.service.ts
+bkp_schema-prisma
+uploads
