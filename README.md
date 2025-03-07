@@ -18,8 +18,8 @@ CL-Application/
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/CL-Application.git
-   cd CL-Application
+   git clone https://github.com/P3st83/CL-Combined.git
+   cd CL-Combined
    ```
 
 2. Install dependencies for both frontend and backend:
