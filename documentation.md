@@ -272,6 +272,16 @@ The application integrates with several AWS services:
    - Improve AI research capabilities
    - Expand campaign management features
 
+## Testing
+
+For detailed information about setting up and running tests, including mock data and credentials, please refer to [Testing Setup Guide](testing-setup.md).
+
+Key testing resources:
+- Mock data configuration
+- AWS credentials setup
+- Test environment configuration
+- Troubleshooting guide
+
 ## Conclusion
 
 The CL application has been significantly improved in terms of reliability, testability, and user experience. By following the guidelines in this documentation, developers can maintain and extend the application effectively while ensuring high quality and reliability. 
