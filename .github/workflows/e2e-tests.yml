@@ -32,17 +32,17 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16'
-          cache: 'npm'
 
+      - name: Install root dependencies
+        run: npm ci
+        
       - name: Install backend dependencies
-        run: |
-          cd cl-backendv4
-          npm ci
+        working-directory: ./cl-backendv4
+        run: npm ci
 
       - name: Install frontend dependencies
-        run: |
-          cd cl-frontendv4
-          npm ci
+        working-directory: ./cl-frontendv4
+        run: npm ci
 
       - name: Set up environment variables
         run: |
@@ -54,21 +54,25 @@ jobs:
           echo "NEXT_PUBLIC_API_URL=http://localhost:4000/api/v1" > cl-frontendv4/.env.local
 
       - name: Run database migrations
-        run: |
-          cd cl-backendv4
-          npx prisma migrate dev
+        working-directory: ./cl-backendv4
+        run: npx prisma migrate dev
 
       - name: Start backend server
+        working-directory: ./cl-backendv4
         run: |
-          cd cl-backendv4
           npm run start:dev &
           sleep 10
 
       - name: Start frontend server
+        working-directory: ./cl-frontendv4
         run: |
-          cd cl-frontendv4
           npm run dev &
           sleep 10
+
+      - name: Create Cypress directories
+        run: |
+          mkdir -p cl-frontendv4/cypress/screenshots
+          mkdir -p cl-frontendv4/cypress/videos
 
       - name: Run Cypress tests
         uses: cypress-io/github-action@v5
@@ -76,6 +80,7 @@ jobs:
           working-directory: cl-frontendv4
           browser: chrome
           headed: false
+          install: false
 
       - name: Upload screenshots on failure
         uses: actions/upload-artifact@v4
@@ -83,10 +88,12 @@ jobs:
         with:
           name: cypress-screenshots
           path: cl-frontendv4/cypress/screenshots
+          if-no-files-found: ignore
 
       - name: Upload videos
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: cypress-videos
-          path: cl-frontendv4/cypress/videos 
+          path: cl-frontendv4/cypress/videos
+          if-no-files-found: ignore 

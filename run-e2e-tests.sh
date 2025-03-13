@@ -9,13 +9,16 @@ RED='\033[0;31m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
+# Get the absolute path of the script directory
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 echo -e "${YELLOW}Starting CL Application End-to-End Tests${NC}"
 echo "=================================================="
 echo ""
 
 # Start the backend server
 echo -e "${YELLOW}Starting backend server...${NC}"
-cd backend && npm run start:dev &
+cd "$SCRIPT_DIR/cl-backendv4" && npm run start:dev &
 BACKEND_PID=$!
 echo -e "${GREEN}Backend server started with PID: $BACKEND_PID${NC}"
 
@@ -25,7 +28,7 @@ sleep 10
 
 # Start the frontend server
 echo -e "${YELLOW}Starting frontend server...${NC}"
-cd ../frontend && npm run dev &
+cd "$SCRIPT_DIR/cl-frontendv4" && npm run dev &
 FRONTEND_PID=$!
 echo -e "${GREEN}Frontend server started with PID: $FRONTEND_PID${NC}"
 
@@ -35,7 +38,7 @@ sleep 10
 
 # Run Cypress tests
 echo -e "${YELLOW}Running Cypress tests...${NC}"
-cd ../frontend && npx cypress run
+cd "$SCRIPT_DIR/cl-frontendv4" && npx cypress run
 TEST_EXIT_CODE=$?
 
 # Shutdown servers
@@ -47,7 +50,7 @@ kill $FRONTEND_PID
 sleep 5
 
 # Return to root directory
-cd ..
+cd "$SCRIPT_DIR"
 
 # Check test results
 if [ $TEST_EXIT_CODE -eq 0 ]; then
