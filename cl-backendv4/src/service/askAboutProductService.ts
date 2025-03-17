@@ -1,4 +1,3 @@
-import axios from "axios";
 import { BedrockQueryService } from "./aiQueryClients/bedrockQueryService";
 
 export const AskAboutProductService = async (req?: string) => {
