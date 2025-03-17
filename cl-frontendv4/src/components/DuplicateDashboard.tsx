@@ -47,6 +47,7 @@ import CallScript from "./CallScript";
 import RichTextEditorModal from "./RichTextEditorModal/RichTextEditorModal";
 import useSWR, { mutate } from "swr";
 import { getBuyerData } from "@/common/dataService";
+import BedrockChat from "./BedrockChat";
 
 type Props = {
   records: any[];
@@ -143,7 +144,7 @@ const DuplicateDashboard = ({ records: data }: Props) => {
     {
       uuid: "ss_a4",
       category: "linkedin_posts",
-      title: "Recent Linkedin Posts",
+      title: "Question #1",
       body: records?.[currentIndex]?.Call_scripts?.filter(
         (call_script: any) => {
           return call_script.Topics.category === "linkedin_posts";
@@ -153,7 +154,7 @@ const DuplicateDashboard = ({ records: data }: Props) => {
     {
       uuid: "bs_a5",
       category: "linked_events",
-      title: "Recent LinkedIn Events",
+      title: "Question #2",
       body: records?.[currentIndex]?.Call_scripts?.filter(
         (call_script: any) => {
           return call_script.Topics.category === "linked_events";
@@ -163,7 +164,7 @@ const DuplicateDashboard = ({ records: data }: Props) => {
     {
       uuid: "ss_a2",
       category: "buyer_news",
-      title: "Company News",
+      title: "Question #3",
       body: records?.[currentIndex]?.Call_scripts?.filter(
         (call_script: any) => {
           return call_script.Topics.category === "buyer_news";
@@ -173,7 +174,7 @@ const DuplicateDashboard = ({ records: data }: Props) => {
     {
       uuid: "ss_a3",
       category: "buyer_investments",
-      title: "Company Investments ",
+      title: "Question #4",
       body: records?.[currentIndex]?.Call_scripts?.filter(
         (call_script: any) => {
           return call_script.Topics.category === "buyer_investments";
@@ -183,7 +184,7 @@ const DuplicateDashboard = ({ records: data }: Props) => {
     {
       uuid: "bs_a3",
       category: "buyer_awards",
-      title: "Company Awards",
+      title: "Question #5",
       body: records?.[currentIndex]?.Call_scripts?.filter(
         (call_script: any) => {
           return call_script.Topics.category === "buyer_awards";
@@ -193,7 +194,7 @@ const DuplicateDashboard = ({ records: data }: Props) => {
     {
       uuid: "intro",
       category: "buyer_challenges",
-      title: "Customer Job Challenges ",
+      title: "Question #6",
       body: records?.[currentIndex]?.Call_scripts?.filter(
         (call_script: any) => {
           return call_script.Topics.category === "buyer_challenges";
@@ -203,7 +204,7 @@ const DuplicateDashboard = ({ records: data }: Props) => {
     {
       uuid: "bs_a1",
       category: "buyer_valueprop",
-      title: "Customer Value Proposition",
+      title: "Question #7",
       body: records?.[currentIndex]?.Call_scripts?.filter(
         (call_script: any) => {
           return call_script.Topics.category === "buyer_valueprop";
@@ -213,7 +214,7 @@ const DuplicateDashboard = ({ records: data }: Props) => {
     {
       uuid: "bs_a4",
       category: "buyer_case_study",
-      title: "Case Study",
+      title: "Question #8",
       body: records?.[currentIndex]?.Call_scripts?.filter(
         (call_script: any) => {
           return call_script.Topics.category === "buyer_case_study";
@@ -223,7 +224,7 @@ const DuplicateDashboard = ({ records: data }: Props) => {
     {
       uuid: "ss_a1",
       category: "industry_challenges",
-      title: "Customer Industry Challenges",
+      title: "Question #9",
       body: records?.[currentIndex]?.Call_scripts?.filter(
         (call_script: any) => {
           return call_script.Topics.category === "industry_challenges";
@@ -233,7 +234,7 @@ const DuplicateDashboard = ({ records: data }: Props) => {
     {
       uuid: "bs_a2",
       category: "buyer_values",
-      title: "Customer Company Values",
+      title: "Question #10",
       body: records?.[currentIndex]?.Call_scripts?.filter(
         (call_script: any) => {
           return call_script.Topics.category === "buyer_values";
@@ -511,9 +512,8 @@ const DuplicateDashboard = ({ records: data }: Props) => {
           footer={null}
         >
           <div>{`${selectedFaq?.q ?? "Question"}?`}</div>
-          <div className="max-h-40 overflow-y-auto">{`${
-            selectedFaq?.a ?? "Answer"
-          }.`}</div>
+          <div className="max-h-40 overflow-y-auto">{`${selectedFaq?.a ?? "Answer"
+            }.`}</div>
         </AntDModal>
         <div>{fourthSectionText.title}</div>
         <div className="w-[90%] border p-6 shadow-sm rounded">
@@ -604,7 +604,7 @@ const DuplicateDashboard = ({ records: data }: Props) => {
       <div className="mt-10 mx-[5%] md:mx-[15%] flex flex-col gap-4 items-center">
         <div className="text-4xl font-semibold">{sixthSectionText.title}</div>
         <div className="font-medium">{sixthSectionText.subTitle}</div>
-        <AiChat />
+        <BedrockChat />
       </div>
     );
   };

@@ -105,6 +105,24 @@ async function main() {
       detail: "Management-related scripts.",
       topic_identifier: "mgmt-topic-1",
     },
+    {
+      title: "title_wrong",
+      category: "Sales",
+      detail: "Call Notes",
+      topic_identifier: "sales-topic-1",
+    },
+    {
+      title: "number_wrong",
+      category: "Sales",
+      detail: "Call Notes",
+      topic_identifier: "sales-topic-2",
+    },
+    {
+      title: "DND",
+      category: "Sales",
+      detail: "Call Notes",
+      topic_identifier: "sales-topic-3",
+    },
   ];
 
   for (const topic of topics) {
@@ -145,7 +163,7 @@ async function main() {
     if (existingScript) {
       // Update the existing record
       await prisma.call_scripts.update({
-        where: { 
+        where: {
           topic_buyer_id: {
             buyer_id: script.buyer_id,
             topic_id: script.topic_id,

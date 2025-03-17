@@ -160,7 +160,7 @@ export default function CallLogs({
             { timeout: 10000 }
           )
         );
-        
+        console.log("[NEW CALL LOGS]:", newCallLogs);
         setCurrentEntries(newCallLogs.data.retrievedRows || []);
       } catch (error) {
         console.error("Error fetching call logs:", error);
