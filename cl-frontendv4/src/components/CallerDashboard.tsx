@@ -449,8 +449,9 @@ const CallerDashboard = ({ records }: Props) => {
           footer={null}
         >
           <div>{`${selectedFaq?.q ?? "Question"}?`}</div>
-          <div className="max-h-40 overflow-y-auto">{`${selectedFaq?.a ?? "Answer"
-            }.`}</div>
+          <div className="max-h-40 overflow-y-auto">{`${
+            selectedFaq?.a ?? "Answer"
+          }.`}</div>
         </AntDModal>
         <div>{fourthSectionText.title}</div>
         <div className="w-[90%] border p-6 shadow-sm rounded">
