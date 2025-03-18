@@ -110,7 +110,8 @@ const ConnectCCP = ({ phoneNum, buyer_Identifier }) => {
     setIsCalling(true);
 
     // Prepare phone number
-    const formattedPhoneNum = testing ? testnumber : "1" + phoneNum.replace(/-/g, "");
+    const formattedPhoneNum = testing ? testnumber : "1" + phoneNum.replace(/\D/g, "");
+    
     setDestPhone(formattedPhoneNum);
     console.log("formattedPhoneNum", formattedPhoneNum);
     try {
