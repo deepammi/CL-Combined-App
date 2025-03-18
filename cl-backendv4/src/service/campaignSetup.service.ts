@@ -1386,6 +1386,7 @@ export const aiSearchService = async (
               let response = "",
                 citations = "";
               try {
+                // NOTE: this call needs to be updated to use perplexity online
                 ({ response, citations } = await aiService.conductWebQuery(
                   query
                 ));
