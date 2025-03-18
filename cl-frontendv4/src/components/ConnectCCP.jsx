@@ -103,23 +103,23 @@ const ConnectCCP = ({ phoneNum, buyer_Identifier }) => {
   const outBoundCall = async () => {
     // Reset error state
     setErrorMessage("");
-    
+
     // Set loading and calling states
     setIsLoading(true);
     setButtonState("callActived");
     setIsCalling(true);
-    
+
     // Prepare phone number
     const formattedPhoneNum = testing ? testnumber : "1" + phoneNum.replace(/-/g, "");
     setDestPhone(formattedPhoneNum);
-    
+    console.log("formattedPhoneNum", formattedPhoneNum);
     try {
       // Make API call
       const { data } = await axios.get(
         `https://o2xpogtamg.execute-api.us-east-1.amazonaws.com/dev/GetConnectManager?destPhone=%2B${formattedPhoneNum}&queueARN=${queueARN}&sourcePhone=%2B${sourcePhone}&instanceId=${instanceId}&contactFlowId=${contactFlowId}&buyer_Identifier=${buyer_Identifier}`,
         { timeout: 10000 } // Add timeout to prevent hanging requests
       );
-      
+
       // Process successful response
       const contactId = JSON.parse(data?.body).ContactId;
       setContactId(contactId);
@@ -127,12 +127,12 @@ const ConnectCCP = ({ phoneNum, buyer_Identifier }) => {
       setRetryCount(0); // Reset retry count on success
     } catch (error) {
       console.error("API call error:", error);
-      
+
       // Handle retry logic
       if (retryCount < MAX_RETRIES) {
         setRetryCount(prevCount => prevCount + 1);
         setErrorMessage(`Call failed. Retrying... (${retryCount + 1}/${MAX_RETRIES})`);
-        
+
         // Wait before retrying
         setTimeout(() => {
           outBoundCall();
@@ -153,33 +153,33 @@ const ConnectCCP = ({ phoneNum, buyer_Identifier }) => {
   const disconnectCall = async () => {
     // Reset error state
     setErrorMessage("");
-    
+
     // Set loading state
     setIsLoading(true);
     setIsCalling(false);
-    
+
     try {
       if (!contactId) {
         setErrorMessage("No active call to disconnect");
         setButtonState("enabled");
         return;
       }
-      
+
       // Make API call to hang up
       const { data } = await axios.get(
         `https://o2xpogtamg.execute-api.us-east-1.amazonaws.com/dev/HangUp?contactId=${contactId}&instanceId=${instanceId}`,
         { timeout: 10000 } // Add timeout to prevent hanging requests
       );
-      
+
       if (contactId) {
         try {
           console.log("[BUYER IDENTIFIER]:", buyer_Identifier);
           // Save call record
           const response = await axios.post(
-            `${process.env.NEXT_PUBLIC_API_BASEURL}/save-new-call`, 
+            `${process.env.NEXT_PUBLIC_API_BASEURL}/save-new-call`,
             {
-              contactId,          
-              buyer_id: buyer_Identifier,    
+              contactId,
+              buyer_id: buyer_Identifier,
             },
             { timeout: 10000 } // Add timeout
           );
@@ -188,8 +188,8 @@ const ConnectCCP = ({ phoneNum, buyer_Identifier }) => {
           console.error("[ERROR while posting the call record]:", err);
           setErrorMessage("Call ended, but failed to save call record");
         }
-      } 
-      
+      }
+
       // Reset states
       setButtonState("enabled");
       setContactId("");
@@ -212,14 +212,14 @@ const ConnectCCP = ({ phoneNum, buyer_Identifier }) => {
       <Button className="mb-8" type="primary" size="large" onClick={openCCP}>
         Open Amazon Connect CCP
       </Button>
-      
+
       {/* Error message display */}
       {errorMessage && (
         <div className="mb-4 p-2 bg-red-100 text-red-700 rounded-md text-center">
           {errorMessage}
         </div>
       )}
-      
+
       <div className="flex items-center justify-center">
         <div className="flex gap-[3rem] md:gap-[6rem] border-2 pt-2 pb-2 pl-10 pr-10 border-[#CCCCCC] rounded-full">
           <div className="relative">
@@ -231,14 +231,14 @@ const ConnectCCP = ({ phoneNum, buyer_Identifier }) => {
           <CutCallIcon disconnectCall={disconnectCall} />
         </div>
       </div>
-      
+
       {/* Loading indicator */}
       {isLoading && (
         <div className="mt-4 text-center text-gray-600">
           <span>Connecting...</span>
         </div>
       )}
-      
+
       {/* CCP Container */}
       {/* <div ref={ref} style={{ display: "none" }} /> */}
       {/* <div className="flex justify-between mb-5">
