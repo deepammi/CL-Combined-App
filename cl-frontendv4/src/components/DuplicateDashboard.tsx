@@ -143,38 +143,58 @@ const DuplicateDashboard = ({ records: data }: Props) => {
   const call_script = [
     {
       uuid: "ss_a4",
-      category: "linkedin_posts",
+      category: "linkedin_post",
       title: "Question #1",
       body: records?.[currentIndex]?.Call_scripts?.filter(
         (call_script: any) => {
-          return call_script.Topics.category === "linkedin_posts";
+          return call_script.Topics.category === "linkedin_post";
         }
       )[0],
     },
     {
       uuid: "bs_a5",
-      category: "linked_events",
+      category: "persona_news",
       title: "Question #2",
       body: records?.[currentIndex]?.Call_scripts?.filter(
         (call_script: any) => {
-          return call_script.Topics.category === "linked_events";
+          return call_script.Topics.category === "persona_news";
         }
       )[0],
     },
     {
       uuid: "ss_a2",
-      category: "buyer_news",
+      category: "company_news",
       title: "Question #3",
       body: records?.[currentIndex]?.Call_scripts?.filter(
         (call_script: any) => {
-          return call_script.Topics.category === "buyer_news";
+          return call_script.Topics.category === "company_news";
         }
       )[0],
     },
     {
       uuid: "ss_a3",
-      category: "buyer_investments",
+      category: "annualreport_priority",
       title: "Question #4",
+      body: records?.[currentIndex]?.Call_scripts?.filter(
+        (call_script: any) => {
+          return call_script.Topics.category === "annualreport_priority";
+        }
+      )[0],
+    },
+    {
+      uuid: "bs_a3",
+      category: "ceo_priority",
+      title: "Question #5",
+      body: records?.[currentIndex]?.Call_scripts?.filter(
+        (call_script: any) => {
+          return call_script.Topics.category === "ceo_priority";
+        }
+      )[0],
+    },
+    {
+      uuid: "intro",
+      category: "buyer_investments",
+      title: "Question #6",
       body: records?.[currentIndex]?.Call_scripts?.filter(
         (call_script: any) => {
           return call_script.Topics.category === "buyer_investments";
@@ -182,9 +202,29 @@ const DuplicateDashboard = ({ records: data }: Props) => {
       )[0],
     },
     {
-      uuid: "bs_a3",
+      uuid: "bs_a1",
+      category: "website_priority",
+      title: "Question #7",
+      body: records?.[currentIndex]?.Call_scripts?.filter(
+        (call_script: any) => {
+          return call_script.Topics.category === "website_priority";
+        }
+      )[0],
+    },
+    {
+      uuid: "bs_a4",
+      category: "buyer_values",
+      title: "Question #8",
+      body: records?.[currentIndex]?.Call_scripts?.filter(
+        (call_script: any) => {
+          return call_script.Topics.category === "buyer_values";
+        }
+      )[0],
+    },
+    {
+      uuid: "ss_a1",
       category: "buyer_awards",
-      title: "Question #5",
+      title: "Question #9",
       body: records?.[currentIndex]?.Call_scripts?.filter(
         (call_script: any) => {
           return call_script.Topics.category === "buyer_awards";
@@ -192,52 +232,12 @@ const DuplicateDashboard = ({ records: data }: Props) => {
       )[0],
     },
     {
-      uuid: "intro",
-      category: "buyer_challenges",
-      title: "Question #6",
-      body: records?.[currentIndex]?.Call_scripts?.filter(
-        (call_script: any) => {
-          return call_script.Topics.category === "buyer_challenges";
-        }
-      )[0],
-    },
-    {
-      uuid: "bs_a1",
-      category: "buyer_valueprop",
-      title: "Question #7",
-      body: records?.[currentIndex]?.Call_scripts?.filter(
-        (call_script: any) => {
-          return call_script.Topics.category === "buyer_valueprop";
-        }
-      )[0],
-    },
-    {
-      uuid: "bs_a4",
-      category: "buyer_case_study",
-      title: "Question #8",
-      body: records?.[currentIndex]?.Call_scripts?.filter(
-        (call_script: any) => {
-          return call_script.Topics.category === "buyer_case_study";
-        }
-      )[0],
-    },
-    {
-      uuid: "ss_a1",
-      category: "industry_challenges",
-      title: "Question #9",
-      body: records?.[currentIndex]?.Call_scripts?.filter(
-        (call_script: any) => {
-          return call_script.Topics.category === "industry_challenges";
-        }
-      )[0],
-    },
-    {
       uuid: "bs_a2",
-      category: "buyer_values",
+      category: "persona_challenge",
       title: "Question #10",
       body: records?.[currentIndex]?.Call_scripts?.filter(
         (call_script: any) => {
-          return call_script.Topics.category === "buyer_values";
+          return call_script.Topics.category === "persona_challenge";
         }
       )[0],
     },
