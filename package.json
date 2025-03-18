@@ -1,6 +1,6 @@
 {
   "name": "cl-application",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "Combined CL Application with Frontend and Backend",
   "main": "index.js",
   "scripts": {

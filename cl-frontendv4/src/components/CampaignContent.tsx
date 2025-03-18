@@ -34,9 +34,6 @@ const CampaignContentContainer: React.FC<CampaignContentContainerProps> = ({
   currentTab,
 }) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [selectedResearchFile, setSelectedResearchFile] = useState<File | null>(
-    null
-  );
   const [resultantCampaignQueries, setResultantCampaignQueries] =
     useState<any>(null);
   const [isLoading, setIsLoading] = useState<Boolean>(false);
@@ -93,15 +90,15 @@ const CampaignContentContainer: React.FC<CampaignContentContainerProps> = ({
   }, [buyerQueries, callerQueries, emailQueries]);
 
   const uploadFileForAiResearch = async () => {
-    console.log("[SELECTED RESEARCH FILE]:", selectedResearchFile);
-    if (!selectedResearchFile) {
+    console.log("[SELECTED RESEARCH FILE]:", selectedFile);
+    if (!selectedFile) {
       console.error("No file selected for upload!");
       return;
     }
     setIsLoading(true);
     try {
       const formData = new FormData();
-      formData.append("file", selectedResearchFile);
+      formData.append("file", selectedFile);
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASEURL}/campaign/ai-research`,
         {
@@ -170,7 +167,7 @@ const CampaignContentContainer: React.FC<CampaignContentContainerProps> = ({
           <FileUploadBox
             setSelectedFile={setSelectedFile}
             selectedFile={selectedFile}
-            onFileUpload={() => {}}
+            onFileUpload={() => { }}
           />
           <Button className="my-2" onClick={uploadFileForCampaignSetup}>
             {isLoading ? <Spin size="small" /> : "Submit"}
@@ -257,11 +254,6 @@ const CampaignContentContainer: React.FC<CampaignContentContainerProps> = ({
       )}
       {currentTab === "AI_RESEARCH" && (
         <>
-          <FileUploadBox
-            setSelectedFile={setSelectedResearchFile}
-            selectedFile={selectedResearchFile}
-            onFileUpload={() => {}}
-          />
           <Button className="my-2" onClick={uploadFileForAiResearch}>
             {isLoading ? <Spin size="small" /> : "Submit"}
           </Button>
