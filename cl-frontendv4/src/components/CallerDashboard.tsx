@@ -110,38 +110,58 @@ const CallerDashboard = ({ records }: Props) => {
   const call_script = [
     {
       uuid: "ss_a4",
-      category: "linkedin_posts",
-      title: "Recent Linkedin Posts",
+      category: "linkedin_post",
+      title: "Question #1",
       body: records?.[currentIndex]?.Call_scripts?.filter(
         (call_script: any) => {
-          return call_script.Topics.category === "linkedin_posts";
+          return call_script.Topics.category === "linkedin_post";
         }
       )[0],
     },
     {
       uuid: "bs_a5",
-      category: "linked_events",
-      title: "Recent LinkedIn Events",
+      category: "persona_news",
+      title: "Question #2",
       body: records?.[currentIndex]?.Call_scripts?.filter(
         (call_script: any) => {
-          return call_script.Topics.category === "linked_events";
+          return call_script.Topics.category === "persona_news";
         }
       )[0],
     },
     {
       uuid: "ss_a2",
-      category: "buyer_news",
-      title: "Company News",
+      category: "company_news",
+      title: "Question #3",
       body: records?.[currentIndex]?.Call_scripts?.filter(
         (call_script: any) => {
-          return call_script.Topics.category === "buyer_news";
+          return call_script.Topics.category === "company_news";
         }
       )[0],
     },
     {
       uuid: "ss_a3",
+      category: "annualreport_priority",
+      title: "Question #4",
+      body: records?.[currentIndex]?.Call_scripts?.filter(
+        (call_script: any) => {
+          return call_script.Topics.category === "annualreport_priority";
+        }
+      )[0],
+    },
+    {
+      uuid: "bs_a3",
+      category: "ceo_priority",
+      title: "Question #5",
+      body: records?.[currentIndex]?.Call_scripts?.filter(
+        (call_script: any) => {
+          return call_script.Topics.category === "ceo_priority";
+        }
+      )[0],
+    },
+    {
+      uuid: "intro",
       category: "buyer_investments",
-      title: "Company Investments ",
+      title: "Question #6",
       body: records?.[currentIndex]?.Call_scripts?.filter(
         (call_script: any) => {
           return call_script.Topics.category === "buyer_investments";
@@ -149,9 +169,29 @@ const CallerDashboard = ({ records }: Props) => {
       )[0],
     },
     {
-      uuid: "bs_a3",
+      uuid: "bs_a1",
+      category: "website_priority",
+      title: "Question #7",
+      body: records?.[currentIndex]?.Call_scripts?.filter(
+        (call_script: any) => {
+          return call_script.Topics.category === "website_priority";
+        }
+      )[0],
+    },
+    {
+      uuid: "bs_a4",
+      category: "buyer_values",
+      title: "Question #8",
+      body: records?.[currentIndex]?.Call_scripts?.filter(
+        (call_script: any) => {
+          return call_script.Topics.category === "buyer_values";
+        }
+      )[0],
+    },
+    {
+      uuid: "ss_a1",
       category: "buyer_awards",
-      title: "Company Awards",
+      title: "Question #9",
       body: records?.[currentIndex]?.Call_scripts?.filter(
         (call_script: any) => {
           return call_script.Topics.category === "buyer_awards";
@@ -159,52 +199,12 @@ const CallerDashboard = ({ records }: Props) => {
       )[0],
     },
     {
-      uuid: "intro",
-      category: "buyer_challenges",
-      title: "Customer Job Challenges ",
-      body: records?.[currentIndex]?.Call_scripts?.filter(
-        (call_script: any) => {
-          return call_script.Topics.category === "buyer_challenges";
-        }
-      )[0],
-    },
-    {
-      uuid: "bs_a1",
-      category: "buyer_valueprop",
-      title: "Customer Value Proposition",
-      body: records?.[currentIndex]?.Call_scripts?.filter(
-        (call_script: any) => {
-          return call_script.Topics.category === "buyer_valueprop";
-        }
-      )[0],
-    },
-    {
-      uuid: "bs_a4",
-      category: "buyer_case_study",
-      title: "Case Study",
-      body: records?.[currentIndex]?.Call_scripts?.filter(
-        (call_script: any) => {
-          return call_script.Topics.category === "buyer_case_study";
-        }
-      )[0],
-    },
-    {
-      uuid: "ss_a1",
-      category: "industry_challenges",
-      title: "Customer Industry Challenges",
-      body: records?.[currentIndex]?.Call_scripts?.filter(
-        (call_script: any) => {
-          return call_script.Topics.category === "industry_challenges";
-        }
-      )[0],
-    },
-    {
       uuid: "bs_a2",
-      category: "buyer_values",
-      title: "Customer Company Values",
+      category: "persona_challenge",
+      title: "Question #10",
       body: records?.[currentIndex]?.Call_scripts?.filter(
         (call_script: any) => {
-          return call_script.Topics.category === "buyer_values";
+          return call_script.Topics.category === "persona_challenge";
         }
       )[0],
     },
@@ -449,9 +449,8 @@ const CallerDashboard = ({ records }: Props) => {
           footer={null}
         >
           <div>{`${selectedFaq?.q ?? "Question"}?`}</div>
-          <div className="max-h-40 overflow-y-auto">{`${
-            selectedFaq?.a ?? "Answer"
-          }.`}</div>
+          <div className="max-h-40 overflow-y-auto">{`${selectedFaq?.a ?? "Answer"
+            }.`}</div>
         </AntDModal>
         <div>{fourthSectionText.title}</div>
         <div className="w-[90%] border p-6 shadow-sm rounded">
